@@ -1,5 +1,5 @@
 [module.hugoVersion]
-min = "0.110.0"
+min = "0.111.3"
 
 [params.images]
 class_name = "img-fluid"
