@@ -1,0 +1,175 @@
+{{/* The image partial generates accept the following parameters: */}}
+{{/* - Filename: the filename or url of image, required. */}}
+{{/* - Alt: the alternative text of image, optional. */}}
+{{/* - Page: the page for finding image resources, optional. */}}
+{{- $formats := slice "bmp" "gif" "jpeg" "jpg" "png" "tif" "tiff" "webp" }}
+{{- $modernFormat := "webp" }}
+{{- if isset site.Params.images "modern_format" }}
+  {{- $modernFormat = site.Params.images.modern_format }}
+{{ end }}
+{{/* Parse the image filename. */}}
+{{- $filename := .Filename }}
+{{- $page := default page .Page }}
+{{- $url := urls.Parse $filename }}
+{{- $params := $url.Query }}
+{{/* Initialize image properties. */}}
+{{- $src := "" }}
+{{- $alt := default "" .Alt }}
+{{- $className := default "img-fluid" site.Params.images.class_name }}
+{{- $height := default "" ($params.Get "height") }}
+{{- $naturalHeight := $height }}
+{{- $width := default "" ($params.Get "width") }}
+{{- $naturalWidth := $width }}
+{{- $pictureClass := "" }}
+{{- $sources := slice }}
+{{/* Image alignment. */}}
+{{- $alignment := $url.Fragment }}
+{{- if eq $alignment "center" }}
+  {{- $pictureClass = default "d-block text-center" site.Params.images.alignment_center_class_name }}
+{{- else if eq $alignment "float-start" }}
+  {{- $pictureClass = default "float-start me-2" site.Params.images.alignment_start_class_name }}
+{{- else if eq $alignment "float-end" }}
+  {{- $pictureClass = default "float-end ms-2" site.Params.images.alignment_end_class_name }}
+{{- end }}
+{{/* Check if the image is external. */}}
+{{- if not $url.Scheme }}
+  {{/* Process internal image. */}}
+  {{- $path := $url.Path }}
+  {{- $res := false }}
+  {{/* Filename begin with leading slash will be treated as global image resource. */}}
+  {{- if hasPrefix $path "/" }}
+    {{- $path = strings.TrimPrefix "/" $path }}
+    {{- $res = resources.GetMatch $path }}
+  {{- else }}
+    {{- $res = $page.Resources.GetMatch $path }}
+  {{- end }}
+  {{- with $res }}
+    {{/* Check if the image resource is valid. */}}
+    {{- if ne $res.MediaType.MainType "image" }}
+      {{- errorf "the image is invalid: %s" $filename }}
+    {{- end }}
+    {{/* Process page's image resource. */}}
+    {{- $src = .RelPermalink }}
+    {{/* Resize the image. */}}
+    {{- if and $width $height }}
+      {{- $res = .Resize (printf "%sx%s" (strings.TrimSuffix "px" $width) (strings.TrimSuffix "px" $height)) }}
+    {{- else if $width }}
+      {{- $res = .Resize (printf "%sx" (strings.TrimSuffix "px" $width)) }}
+    {{- else if $height }}
+      {{- $res = .Resize (printf "x%s" (strings.TrimSuffix "px" $height)) }}
+    {{- end }}
+    {{/* Cropping image. */}}
+    {{- with $params.Get "crop" }}
+      {{- $opts := delimit (split . ",") " " | string }}
+      {{- $res = $res.Crop $opts }}
+    {{- end }}
+    {{/* Filling image. */}}
+    {{- with $params.Get "fill" }}
+      {{- $opts := delimit (split . ",") " " | string }}
+      {{- $res = $res.Fill $opts }}
+    {{- end }}
+    {{/* Fitting image. */}}
+    {{- with $params.Get "fit" }}
+      {{- $res = $res.Fit . }}
+    {{- end }}
+    {{/* Filtering image. */}}
+    {{- $filters := slice }}
+    {{- with $params.Get "brightness" }}
+      {{ $filters = $filters | append (images.Brightness .) }}
+    {{ end }}
+    {{- with $params.Get "gaussianBlur" }}
+      {{ $filters = $filters | append (images.GaussianBlur .) }}
+    {{ end }}
+    {{- with $params.Get "pixelate" }}
+      {{ $filters = $filters | append (images.Pixelate .) }}
+    {{ end }}
+    {{- with $params.Get "contrast" }}
+      {{ $filters = $filters | append (images.Contrast .) }}
+    {{ end }}
+    {{- with $params.Get "gamma" }}
+      {{ $filters = $filters | append (images.Gamma .) }}
+    {{ end }}
+    {{- with $params.Has "grayscale" }}
+      {{ $filters = $filters | append images.Grayscale }}
+    {{ end }}
+    {{- with $params.Get "hue" }}
+      {{ $filters = $filters | append (images.Hue .) }}
+    {{ end }}
+    {{- with $params.Has "invert" }}
+      {{ $filters = $filters | append images.Invert }}
+    {{ end }}
+    {{- with $params.Get "saturation" }}
+      {{ $filters = $filters | append (images.Saturation .) }}
+    {{ end }}
+    {{- with $params.Get "sepia" }}
+      {{ $filters = $filters | append (images.Sepia .) }}
+    {{ end }}
+    {{- with $params.Get "sigmoid" }}
+      {{- $balance := split . "," -}}
+      {{- $filters = $filters | append (images.Sigmoid (index $balance 0) (index $balance 1)) }}
+    {{- end }}
+    {{- with $params.Get "unsharpMask" }}
+      {{- $balance := split . "," -}}
+      {{- $filters = $filters | append (images.UnsharpMask (index $balance 0) (index $balance 1) (index $balance 2)) }}
+    {{- end }}
+    {{- with $params.Get "colorBalance" }}
+      {{- $balance := split . "," -}}
+      {{- $filters = $filters | append (images.ColorBalance (index $balance 0) (index $balance 1) (index $balance 2)) }}
+    {{- end }}
+    {{- with $params.Get "colorize" }}
+      {{- $balance := split . "," -}}
+      {{- $filters = $filters | append (images.Colorize (index $balance 0) (index $balance 1) (index $balance 2)) }}
+    {{- end }}
+    {{- with $filters }}
+      {{- $res = $res | images.Filter $filters }}
+    {{- end }}
+    {{/* Modern format. */}}
+    {{- if and $modernFormat (ne $modernFormat $res.MediaType.SubType) (in $formats $res.MediaType.SubType) }}
+      {{- $modernImg := partial "images/functions/format" (dict "Img" $res "Format" $modernFormat) }}
+      {{- $sources = $sources | append (dict "srcset" $modernImg.RelPermalink "type" $modernImg.MediaType) }}
+    {{- end }}
+    {{/* Reset image properties. */}}
+    {{- $src = $res.RelPermalink }}
+    {{- $height = $res.Height }}
+    {{- $naturalHeight = $res.Height }}
+    {{- $width = $res.Width }}
+    {{- $naturalWidth = $res.Width }}
+  {{- else }}
+    {{- $filepath := path.Join "static" $url.Path }}
+    {{- if fileExists $filepath }}
+      {{/* Process static image. */}}
+      {{- $src = absURL $url.Path }}
+      {{- with imageConfig $filepath }}
+        {{- $naturalHeight = printf "%dpx" .Height }}
+        {{- $naturalWidth = printf "%dpx" .Width }}
+      {{- end }}
+    {{- else }}
+      {{- warnf "image not found: %s" $filename }}
+    {{- end }}
+  {{- end }}
+{{- else }}
+  {{/* Process external image. */}}
+  {{- $src = $filename }}
+{{- end }}
+{{- if $src }}
+  {{/* Inline style. */}}
+  {{- $style := slice }}
+  {{- if and $height (ne $height $naturalHeight) }}
+    {{- $style = $style | append (printf "height: %s" $height) }}
+  {{- end }}
+  {{- if and $width (ne $width $naturalWidth) }}
+    {{- $style = $style | append (printf "width: %s" $width) }}
+  {{- end }}
+  <picture class="{{ $pictureClass }}">
+    {{- range $sources }}
+      <source srcset="{{ .srcset }}" type="{{ .type }}" />
+    {{- end }}
+    <img
+      class="{{ $className }}"
+      src="{{ $src }}"
+      alt="{{ $alt }}"
+      {{ with $naturalHeight }}height="{{ . }}"{{ end }}
+      {{ with $naturalWidth }}width="{{ . }}"{{ end }}
+      {{ with $style }}{{ printf `style="%s"` (delimit . `; `) | safeHTMLAttr }}{{ end }} />
+  </picture>
+{{- end -}}

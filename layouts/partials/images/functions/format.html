@@ -1,0 +1,4 @@
+{{/* Format an image with original size. */}}
+{{/* - Img: the image resource. */}}
+{{/* - Format: the target format. */}}
+{{- return .Img.Resize (printf "%dx%d %s" .Img.Width .Img.Height .Format) -}}
