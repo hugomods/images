@@ -168,6 +168,7 @@
       class="{{ $className }}"
       src="{{ $src }}"
       alt="{{ $alt }}"
+      loading="lazy"
       {{ with $naturalHeight }}height="{{ . }}"{{ end }}
       {{ with $naturalWidth }}width="{{ . }}"{{ end }}
       {{ with $style }}{{ printf `style="%s"` (delimit . `; `) | safeHTMLAttr }}{{ end }} />
