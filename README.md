@@ -5,4 +5,4 @@
 [![License](https://img.shields.io/github/license/hugomods/images?style=flat-square)](https://github.com/hugomods/images/blob/main/LICENSE)
 [![Version](https://img.shields.io/github/v/tag/hugomods/images?label=version&style=flat-square)](https://github.com/hugomods/images/tags)
 
-[Documentation](https://hb.razonyang.com/en/docs/modules/images/).
+Hugo images module for processing images via URL query string and fragment. Read more on our [documentations](https://hb.razonyang.com/en/docs/modules/images/).
