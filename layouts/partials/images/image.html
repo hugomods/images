@@ -15,11 +15,14 @@
 {{- $params := $url.Query }}
 {{/* Initialize image properties. */}}
 {{- $src := "" }}
+{{- $originalSrc := "" }}
 {{- $alt := default "" .Alt }}
 {{- $className := default (default "img-fluid" site.Params.images.class_name) .ClassName }}
 {{- $height := default "" ($params.Get "height") }}
+{{- $originalHeight := 0 }}
 {{- $naturalHeight := $height }}
 {{- $width := default "" ($params.Get "width") }}
+{{- $originalWidth := 0 }}
 {{- $naturalWidth := $width }}
 {{- $pictureClass := "" }}
 {{- $sources := slice }}
@@ -45,6 +48,9 @@
     {{- $res = $page.Resources.GetMatch $path }}
   {{- end }}
   {{- with $res }}
+    {{- $originalSrc = $res.RelPermalink }}
+    {{- $originalWidth = $res.Width }}
+    {{- $originalHeight = $res.Height }}
     {{/* Check if the image resource is valid. */}}
     {{- if ne $res.MediaType.MainType "image" }}
       {{- errorf "the image is invalid: %s" $filename }}
@@ -172,6 +178,9 @@
       loading="lazy"
       {{ with $naturalHeight }}height="{{ . }}"{{ end }}
       {{ with $naturalWidth }}width="{{ . }}"{{ end }}
-      {{ with $style }}{{ printf `style="%s"` (delimit . `; `) | safeHTMLAttr }}{{ end }} />
+      {{ with $style }}{{ printf `style="%s"` (delimit . `; `) | safeHTMLAttr }}{{ end }}
+      {{ with $originalSrc }}data-src="{{ . }}"{{ end }}
+      {{ with $originalWidth }}data-width="{{ . }}"{{ end }}
+      {{ with $originalHeight }}data-height="{{ . }}"{{ end }} />
   </picture>
 {{- end -}}
