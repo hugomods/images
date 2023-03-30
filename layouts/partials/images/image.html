@@ -3,6 +3,7 @@
 {{/* - Alt: the alternative text of image, optional. */}}
 {{/* - Page: the page for finding image resources, optional. */}}
 {{/* - ClassName: the class name of the img tag, optional. */}}
+{{/* - Original: whether to describe the original image info via data-* attributes, default to false. */}}
 {{- $formats := slice "bmp" "gif" "jpeg" "jpg" "png" "tif" "tiff" "webp" }}
 {{- $modernFormat := "webp" }}
 {{- if isset site.Params.images "modern_format" }}
@@ -15,6 +16,7 @@
 {{- $params := $url.Query }}
 {{/* Initialize image properties. */}}
 {{- $src := "" }}
+{{- $original := default false .Original }}
 {{- $originalSrc := "" }}
 {{- $alt := default "" .Alt }}
 {{- $className := default (default "img-fluid" site.Params.images.class_name) .ClassName }}
@@ -179,8 +181,8 @@
       {{ with $naturalHeight }}height="{{ . }}"{{ end }}
       {{ with $naturalWidth }}width="{{ . }}"{{ end }}
       {{ with $style }}{{ printf `style="%s"` (delimit . `; `) | safeHTMLAttr }}{{ end }}
-      {{ with $originalSrc }}data-src="{{ . }}"{{ end }}
-      {{ with $originalWidth }}data-width="{{ . }}"{{ end }}
-      {{ with $originalHeight }}data-height="{{ . }}"{{ end }} />
+      {{ if and $original $originalSrc }}data-src="{{ $originalSrc }}"{{ end }}
+      {{ if and $original $originalWidth }}data-width="{{ $originalWidth }}"{{ end }}
+      {{ if and $original $originalHeight }}data-height="{{ $originalHeight }}"{{ end }} />
   </picture>
 {{- end -}}
