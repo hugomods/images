@@ -2,6 +2,7 @@
 {{/* - Filename: the filename or url of image, required. */}}
 {{/* - Alt: the alternative text of image, optional. */}}
 {{/* - Page: the page for finding image resources, optional. */}}
+{{/* - ClassName: the class name of the img tag, optional. */}}
 {{- $formats := slice "bmp" "gif" "jpeg" "jpg" "png" "tif" "tiff" "webp" }}
 {{- $modernFormat := "webp" }}
 {{- if isset site.Params.images "modern_format" }}
@@ -15,7 +16,7 @@
 {{/* Initialize image properties. */}}
 {{- $src := "" }}
 {{- $alt := default "" .Alt }}
-{{- $className := default "img-fluid" site.Params.images.class_name }}
+{{- $className := default (default "img-fluid" site.Params.images.class_name) .ClassName }}
 {{- $height := default "" ($params.Get "height") }}
 {{- $naturalHeight := $height }}
 {{- $width := default "" ($params.Get "width") }}
