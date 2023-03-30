@@ -4,11 +4,13 @@
 {{/* - Page: the page for finding image resources, optional. */}}
 {{/* - ClassName: the class name of the img tag, optional. */}}
 {{/* - Original: whether to describe the original image info via data-* attributes, default to false. */}}
+{{/* - LazyLoading: whether enable lazy loading, default true. */}}
 {{- $formats := slice "bmp" "gif" "jpeg" "jpg" "png" "tif" "tiff" "webp" }}
 {{- $modernFormat := "webp" }}
 {{- if isset site.Params.images "modern_format" }}
   {{- $modernFormat = site.Params.images.modern_format }}
 {{ end }}
+{{- $lazyLoading := default true .LazyLoading }}
 {{/* Parse the image filename. */}}
 {{- $filename := .Filename }}
 {{- $page := default page .Page }}
@@ -177,7 +179,7 @@
       class="{{ $className }}"
       src="{{ $src }}"
       alt="{{ $alt }}"
-      loading="lazy"
+      {{ if $lazyLoading }}loading="lazy"{{ end }}
       {{ with $naturalHeight }}height="{{ . }}"{{ end }}
       {{ with $naturalWidth }}width="{{ . }}"{{ end }}
       {{ with $style }}{{ printf `style="%s"` (delimit . `; `) | safeHTMLAttr }}{{ end }}
