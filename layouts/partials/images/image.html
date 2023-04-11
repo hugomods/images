@@ -52,7 +52,7 @@
     {{- $res = $page.Resources.GetMatch $path }}
   {{- end }}
   {{- with $res }}
-    {{- $originalSrc = $res.RelPermalink }}
+    {{- $originalSrc = ($res | fingerprint "md5").RelPermalink }}
     {{- $originalWidth = $res.Width }}
     {{- $originalHeight = $res.Height }}
     {{/* Check if the image resource is valid. */}}
@@ -153,6 +153,22 @@
       {{- with imageConfig $filepath }}
         {{- $naturalHeight = printf "%dpx" .Height }}
         {{- $naturalWidth = printf "%dpx" .Width }}
+      {{- end }}
+      {{/* hash by the date. */}}
+      {{- $hash := "" }}
+      {{- with os.Stat $filepath }}
+        {{- $hash = .ModTime.Format "20060102150405" | md5 }}
+      {{- end }}
+      {{- with $hash }}
+        {{- $fragment := "" }}
+        {{- if $url.Fragment }}
+          {{- $fragment = printf "#%s" $url.Fragment }}
+        {{- end }}
+        {{- if $url.Query }}
+          {{- $src = printf "%s?%s&v=%s%s" $src $url.RawQuery $hash $fragment }}
+        {{- else }}
+          {{- $src = printf "%s?v=%s%s" $src $hash $fragment }}
+        {{- end }}
       {{- end }}
     {{- else }}
       {{- warnf "image not found: %s" $filename }}
