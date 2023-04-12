@@ -59,8 +59,6 @@
     {{- if ne $res.MediaType.MainType "image" }}
       {{- errorf "the image is invalid: %s" $filename }}
     {{- end }}
-    {{/* Process page's image resource. */}}
-    {{- $src = .RelPermalink }}
     {{/* Resize the image. */}}
     {{- if and $width $height }}
       {{- $res = .Resize (printf "%sx%s" (strings.TrimSuffix "px" $width) (strings.TrimSuffix "px" $height)) }}
@@ -140,7 +138,7 @@
       {{- $sources = $sources | append (dict "srcset" $modernImg.RelPermalink "type" $modernImg.MediaType) }}
     {{- end }}
     {{/* Reset image properties. */}}
-    {{- $src = $res.RelPermalink }}
+    {{- $src = ($res | fingerprint "md5").RelPermalink }}
     {{- $height = $res.Height }}
     {{- $naturalHeight = $res.Height }}
     {{- $width = $res.Width }}
