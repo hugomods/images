@@ -1,9 +1,10 @@
 {{/* The image partial generates accept the following parameters: */}}
-{{/* - Filename: the filename or url of image, required. */}}
-{{/* - Alt: the alternative text of image, optional. */}}
-{{/* - Page: the page for finding image resources, optional. */}}
-{{/* - ClassName: the class name of the img tag, optional. */}}
-{{/* - Original: whether to describe the original image info via data-* attributes, default to false. */}}
+{{/* - Filename   : the filename or url of image, required. */}}
+{{/* - Alt        : the alternative text of image, optional. */}}
+{{/* - Caption    : the caption text of image, optional. */}}
+{{/* - Page       : the page for finding image resources, optional. */}}
+{{/* - ClassName  : the class name of the img tag, optional. */}}
+{{/* - Original   : whether to describe the original image info via data-* attributes, default to false. */}}
 {{/* - LazyLoading: whether enable lazy loading, default true. */}}
 {{- $formats := slice "bmp" "gif" "jpeg" "jpg" "png" "tif" "tiff" "webp" }}
 {{- $modernFormat := "webp" }}
@@ -21,6 +22,7 @@
 {{- $original := default false .Original }}
 {{- $originalSrc := "" }}
 {{- $alt := default "" .Alt }}
+{{- $caption := default "" .Caption }}
 {{- $className := default (default "img-fluid" site.Params.images.class_name) .ClassName }}
 {{- $height := default "" ($params.Get "height") }}
 {{- $originalHeight := 0 }}
@@ -28,16 +30,16 @@
 {{- $width := default "" ($params.Get "width") }}
 {{- $originalWidth := 0 }}
 {{- $naturalWidth := $width }}
-{{- $pictureClass := "" }}
+{{- $wrapperClass := "" }}
 {{- $sources := slice }}
 {{/* Image alignment. */}}
 {{- $alignment := $url.Fragment }}
 {{- if eq $alignment "center" }}
-  {{- $pictureClass = default "d-block text-center" site.Params.images.alignment_center_class_name }}
+  {{- $wrapperClass = default "d-block text-center" site.Params.images.alignment_center_class_name }}
 {{- else if eq $alignment "float-start" }}
-  {{- $pictureClass = default "float-start me-2" site.Params.images.alignment_start_class_name }}
+  {{- $wrapperClass = default "float-start me-2" site.Params.images.alignment_start_class_name }}
 {{- else if eq $alignment "float-end" }}
-  {{- $pictureClass = default "float-end ms-2" site.Params.images.alignment_end_class_name }}
+  {{- $wrapperClass = default "float-end ms-2" site.Params.images.alignment_end_class_name }}
 {{- end }}
 {{/* Check if the image is external. */}}
 {{- if not $url.Scheme }}
@@ -185,20 +187,29 @@
   {{- if and $width (ne $width $naturalWidth) }}
     {{- $style = $style | append (printf "width: %s" $width) }}
   {{- end }}
-  <picture class="{{ $pictureClass }}">
-    {{- range $sources }}
-      <source srcset="{{ .srcset }}" type="{{ .type }}" />
-    {{- end }}
-    <img
-      class="{{ $className }}"
-      src="{{ $src }}"
-      alt="{{ $alt }}"
-      {{ if $lazyLoading }}loading="lazy"{{ end }}
-      {{ with $naturalHeight }}height="{{ . }}"{{ end }}
-      {{ with $naturalWidth }}width="{{ . }}"{{ end }}
-      {{ with $style }}{{ printf `style="%s"` (delimit . `; `) | safeHTMLAttr }}{{ end }}
-      {{ if and $original $originalSrc }}data-src="{{ $originalSrc }}"{{ end }}
-      {{ if and $original $originalWidth }}data-width="{{ $originalWidth }}"{{ end }}
-      {{ if and $original $originalHeight }}data-height="{{ $originalHeight }}"{{ end }} />
-  </picture>
+  {{- $ctx := dict
+    "sources" $sources
+    "className" $className
+    "src" $src
+    "alt" $alt
+    "lazyLoading" $lazyLoading
+    "naturalHeight" $naturalHeight
+    "naturalWidth" $naturalWidth
+    "style" $style
+    "original" $original
+    "originalSrc" $originalSrc
+    "originalWidth" $originalWidth
+    "originalHeight" $originalHeight
+  }}
+  {{- if $caption }}
+    {{- $figureClass := default "figure" site.Params.images.figure_class_name }}
+    {{- $figureCaptionClass := default "figure-caption" site.Params.images.figure_caption_class_name }}
+    {{- $figureImgClass := default "figure-img" site.Params.images.figure_image_class_name }}
+    <figure class="{{ $figureClass }} {{ $wrapperClass }}">
+      {{ partial "images/functions/picture" (merge $ctx (dict "className" (printf "%s %s" $figureImgClass $className))) }}
+      <figcaption class="{{ $figureCaptionClass }}">{{ $caption }}</figcaption>
+    </figure>
+  {{- else }}
+    {{ partial "images/functions/picture" (merge $ctx (dict "wrapperClass" $wrapperClass)) }}
+  {{- end }}
 {{- end -}}
