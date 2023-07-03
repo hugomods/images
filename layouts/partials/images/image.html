@@ -6,6 +6,7 @@
 {{/* - ClassName  : the class name of the img tag, optional. */}}
 {{/* - Original   : whether to describe the original image info via data-* attributes, default to false. */}}
 {{/* - LazyLoading: whether enable lazy loading, default true. */}}
+{{/* - Style      : additional inline style for <img> tag. */}}
 {{- $formats := slice "bmp" "gif" "jpeg" "jpg" "png" "tif" "tiff" "webp" }}
 {{- $modernFormat := "webp" }}
 {{- if isset site.Params.images "modern_format" }}
@@ -19,6 +20,7 @@
 {{- $params := $url.Query }}
 {{/* Initialize image properties. */}}
 {{- $src := "" }}
+{{- $style := default slice .Style }}
 {{- $original := default false .Original }}
 {{- $originalSrc := "" }}
 {{- $alt := default "" .Alt }}
@@ -180,7 +182,6 @@
 {{- end }}
 {{- if $src }}
   {{/* Inline style. */}}
-  {{- $style := slice }}
   {{- if and $height (ne $height $naturalHeight) }}
     {{- $style = $style | append (printf "height: %s" $height) }}
   {{- end }}
@@ -206,10 +207,10 @@
     {{- $figureCaptionClass := default "figure-caption" site.Params.images.figure_caption_class_name }}
     {{- $figureImgClass := default "figure-img" site.Params.images.figure_image_class_name }}
     <figure class="{{ $figureClass }} {{ $wrapperClass }}">
-      {{ partial "images/functions/picture" (merge $ctx (dict "className" (printf "%s %s" $figureImgClass $className))) }}
+      {{ partial "images/picture" (merge $ctx (dict "className" (printf "%s %s" $figureImgClass $className))) }}
       <figcaption class="{{ $figureCaptionClass }}">{{ $caption }}</figcaption>
     </figure>
   {{- else }}
-    {{ partial "images/functions/picture" (merge $ctx (dict "wrapperClass" $wrapperClass)) }}
+    {{ partial "images/picture" (merge $ctx (dict "wrapperClass" $wrapperClass)) }}
   {{- end }}
 {{- end -}}
