@@ -1,12 +1,12 @@
 {{/* The image partial generates accept the following parameters: */}}
-{{/* - Filename   : the filename or url of image, required. */}}
-{{/* - Alt        : the alternative text of image, optional. */}}
-{{/* - Caption    : the caption text of image, optional. */}}
-{{/* - Page       : the page for finding image resources, optional. */}}
-{{/* - ClassName  : the class name of the img tag, optional. */}}
-{{/* - Original   : whether to describe the original image info via data-* attributes, default to false. */}}
-{{/* - LazyLoading: whether enable lazy loading, default true. */}}
-{{/* - Style      : additional inline style for <img> tag. */}}
+{{/* - Filename    : the filename or url of image, required. */}}
+{{/* - Alt         : the alternative text of image, optional. */}}
+{{/* - Caption     : the caption text of image, optional. */}}
+{{/* - Page        : the page for finding image resources, optional. */}}
+{{/* - ClassName   : the class name of the img tag, optional. */}}
+{{/* - Original    : whether to describe the original image info via data-* attributes, default to false. */}}
+{{/* - LazyLoading : whether enable lazy loading, default true. */}}
+{{/* - Style       : additional inline style for <img> tag. */}}
 {{- $formats := slice "bmp" "gif" "jpeg" "jpg" "png" "tif" "tiff" "webp" }}
 {{- $modernFormat := "webp" }}
 {{- if isset site.Params.images "modern_format" }}
