@@ -11,7 +11,7 @@
 {{- $modernFormat := "webp" }}
 {{- if isset site.Params.images "modern_format" }}
   {{- $modernFormat = site.Params.images.modern_format }}
-{{ end }}
+{{- end }}
 {{- $lazyLoading := default true .LazyLoading }}
 {{/* Parse the image filename. */}}
 {{- $filename := .Filename }}
@@ -88,38 +88,38 @@
     {{/* Filtering image. */}}
     {{- $filters := slice }}
     {{- with $params.Get "brightness" }}
-      {{ $filters = $filters | append (images.Brightness .) }}
-    {{ end }}
+      {{- $filters = $filters | append (images.Brightness .) }}
+    {{- end }}
     {{- with $params.Get "gaussianBlur" }}
-      {{ $filters = $filters | append (images.GaussianBlur .) }}
-    {{ end }}
+      {{- $filters = $filters | append (images.GaussianBlur .) }}
+    {{- end }}
     {{- with $params.Get "pixelate" }}
-      {{ $filters = $filters | append (images.Pixelate .) }}
-    {{ end }}
+      {{- $filters = $filters | append (images.Pixelate .) }}
+    {{- end }}
     {{- with $params.Get "contrast" }}
-      {{ $filters = $filters | append (images.Contrast .) }}
-    {{ end }}
+      {{- $filters = $filters | append (images.Contrast .) }}
+    {{- end }}
     {{- with $params.Get "gamma" }}
-      {{ $filters = $filters | append (images.Gamma .) }}
-    {{ end }}
+      {{- $filters = $filters | append (images.Gamma .) }}
+    {{- end }}
     {{- with $params.Has "grayscale" }}
-      {{ $filters = $filters | append images.Grayscale }}
-    {{ end }}
+      {{- $filters = $filters | append images.Grayscale }}
+    {{- end }}
     {{- with $params.Get "hue" }}
-      {{ $filters = $filters | append (images.Hue .) }}
-    {{ end }}
+      {{- $filters = $filters | append (images.Hue .) }}
+    {{- end }}
     {{- with $params.Has "invert" }}
       {{ $filters = $filters | append images.Invert }}
-    {{ end }}
+    {{- end }}
     {{- with $params.Get "opacity" }}
-      {{ $filters = $filters | append (images.Opacity .) }}
-    {{ end }}
+      {{- $filters = $filters | append (images.Opacity .) }}
+    {{- end }}
     {{- with $params.Get "saturation" }}
-      {{ $filters = $filters | append (images.Saturation .) }}
-    {{ end }}
+      {{- $filters = $filters | append (images.Saturation .) }}
+    {{- end }}
     {{- with $params.Get "sepia" }}
-      {{ $filters = $filters | append (images.Sepia .) }}
-    {{ end }}
+      {{- $filters = $filters | append (images.Sepia .) }}
+    {{- end }}
     {{- with $params.Get "sigmoid" }}
       {{- $balance := split . "," -}}
       {{- $filters = $filters | append (images.Sigmoid (index $balance 0) (index $balance 1)) }}
