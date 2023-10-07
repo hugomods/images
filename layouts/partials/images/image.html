@@ -111,6 +111,9 @@
     {{- with $params.Has "invert" }}
       {{ $filters = $filters | append images.Invert }}
     {{ end }}
+    {{- with $params.Get "opacity" }}
+      {{ $filters = $filters | append (images.Opacity .) }}
+    {{ end }}
     {{- with $params.Get "saturation" }}
       {{ $filters = $filters | append (images.Saturation .) }}
     {{ end }}
