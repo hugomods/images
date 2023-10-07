@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.0](https://github.com/hugomods/images/compare/v0.7.0...v0.8.0) (2023-10-07)
+
+
+### Features ✨
+
+* add support for the opacity filter ([26371df](https://github.com/hugomods/images/commit/26371dfb3383c6e74505fb43121fa1d5cf6cf946))
+
 ## [0.7.0](https://github.com/hugomods/images/compare/v0.6.0...v0.7.0) (2023-07-03)
 
 
