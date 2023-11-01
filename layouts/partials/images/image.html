@@ -7,7 +7,7 @@
 {{/* - Original    : whether to describe the original image info via data-* attributes, default to false. */}}
 {{/* - LazyLoading : whether enable lazy loading, default true. */}}
 {{/* - Style       : additional inline style for <img> tag. */}}
-{{- $formats := slice "bmp" "gif" "jpeg" "jpg" "png" "tif" "tiff" "webp" }}
+{{- $formats := slice "bmp" "jpeg" "jpg" "png" "tif" "tiff" "webp" }}
 {{- $modernFormat := "webp" }}
 {{- if isset site.Params.images "modern_format" }}
   {{- $modernFormat = site.Params.images.modern_format }}
