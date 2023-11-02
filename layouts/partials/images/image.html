@@ -56,7 +56,9 @@
     {{- $res = $page.Resources.GetMatch $path }}
   {{- end }}
   {{- with $res }}
-    {{- $originalSrc = ($res | fingerprint "md5").RelPermalink }}
+    {{/* TODO: use Permalink instead, since the fingerprint resources will not published to other sites. */}}
+    {{/* See https://github.com/hugomods/images/issues/23. */}}
+    {{- $originalSrc = ($res | fingerprint "md5").Permalink }}
     {{- $originalWidth = $res.Width }}
     {{- $originalHeight = $res.Height }}
     {{/* Check if the image resource is valid. */}}
@@ -145,7 +147,9 @@
       {{- $sources = $sources | append (dict "srcset" $modernImg.RelPermalink "type" $modernImg.MediaType) }}
     {{- end }}
     {{/* Reset image properties. */}}
-    {{- $src = ($res | fingerprint "md5").RelPermalink }}
+    {{/* TODO: use Permalink instead, since the fingerprint resources will not published to other sites. */}}
+    {{/* See https://github.com/hugomods/images/issues/23. */}}
+    {{- $src = ($res | fingerprint "md5").Permalink }}
     {{- $height = $res.Height }}
     {{- $naturalHeight = $res.Height }}
     {{- $width = $res.Width }}
