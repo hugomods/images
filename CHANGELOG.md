@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.3](https://github.com/hugomods/images/compare/v0.8.2...v0.8.3) (2023-11-08)
+
+
+### Bug Fixes 🐞
+
+* rename the images site parameter to hugomods.images ([#27](https://github.com/hugomods/images/issues/27)) ([6560be2](https://github.com/hugomods/images/commit/6560be2b3cc1c97bec805c19628db965062171ec)), closes [#26](https://github.com/hugomods/images/issues/26)
+
 ## [0.8.2](https://github.com/hugomods/images/compare/v0.8.1...v0.8.2) (2023-11-02)
 
 
