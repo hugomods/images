@@ -1,7 +1,7 @@
 [module.hugoVersion]
 min = "0.119.0"
 
-[params.images]
+[params.hugomods.images]
 class_name = "img-fluid"
 alignment_center_class_name = "d-block text-center"
 alignment_start_class_name = "float-start me-2"

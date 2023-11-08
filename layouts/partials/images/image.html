@@ -9,8 +9,9 @@
 {{/* - Style       : additional inline style for <img> tag. */}}
 {{- $formats := slice "bmp" "jpeg" "jpg" "png" "tif" "tiff" "webp" }}
 {{- $modernFormat := "webp" }}
-{{- if isset site.Params.images "modern_format" }}
-  {{- $modernFormat = site.Params.images.modern_format }}
+{{- $siteParams := partialCached "images/functions/params" . }}
+{{- if isset $siteParams "modern_format" }}
+  {{- $modernFormat = $siteParams.modern_format }}
 {{- end }}
 {{- $lazyLoading := default true .LazyLoading }}
 {{/* Parse the image filename. */}}
@@ -25,7 +26,7 @@
 {{- $originalSrc := "" }}
 {{- $alt := default "" .Alt }}
 {{- $caption := default "" .Caption }}
-{{- $className := default (default "img-fluid" site.Params.images.class_name) .ClassName }}
+{{- $className := default (default "img-fluid" $siteParams.class_name) .ClassName }}
 {{- $height := default "" ($params.Get "height") }}
 {{- $originalHeight := 0 }}
 {{- $naturalHeight := $height }}
@@ -37,11 +38,11 @@
 {{/* Image alignment. */}}
 {{- $alignment := $url.Fragment }}
 {{- if eq $alignment "center" }}
-  {{- $wrapperClass = default "d-block text-center" site.Params.images.alignment_center_class_name }}
+  {{- $wrapperClass = default "d-block text-center" $siteParams.alignment_center_class_name }}
 {{- else if eq $alignment "float-start" }}
-  {{- $wrapperClass = default "float-start me-2" site.Params.images.alignment_start_class_name }}
+  {{- $wrapperClass = default "float-start me-2" $siteParams.alignment_start_class_name }}
 {{- else if eq $alignment "float-end" }}
-  {{- $wrapperClass = default "float-end ms-2" site.Params.images.alignment_end_class_name }}
+  {{- $wrapperClass = default "float-end ms-2" $siteParams.alignment_end_class_name }}
 {{- end }}
 {{/* Check if the image is external. */}}
 {{- if not $url.Scheme }}
@@ -210,9 +211,9 @@
     "originalHeight" $originalHeight
   }}
   {{- if $caption }}
-    {{- $figureClass := default "figure" site.Params.images.figure_class_name }}
-    {{- $figureCaptionClass := default "figure-caption" site.Params.images.figure_caption_class_name }}
-    {{- $figureImgClass := default "figure-img" site.Params.images.figure_image_class_name }}
+    {{- $figureClass := default "figure" $siteParams.figure_class_name }}
+    {{- $figureCaptionClass := default "figure-caption" $siteParams.figure_caption_class_name }}
+    {{- $figureImgClass := default "figure-img" $siteParams.figure_image_class_name }}
     <figure class="{{ $figureClass }} {{ $wrapperClass }}">
       {{ partial "images/picture" (merge $ctx (dict "className" (printf "%s %s" $figureImgClass $className))) }}
       <figcaption class="{{ $figureCaptionClass }}">{{ $caption }}</figcaption>
