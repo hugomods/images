@@ -1,0 +1,18 @@
+{{- $default := dict
+  "class_name" "img-fluid"
+  "alignment_center_class_name" "d-block text-center"
+  "alignment_start_class_name" "float-start me-2"
+  "alignment_end_class_name" "float-end ms-2"
+  "figure_class_name" "figure"
+  "figure_caption_class_name" "figure-caption"
+  "figure_image_class_name" "figure-img"
+  "modern_format" "webp"
+}}
+{{- $params := default dict site.Params.hugomods.images }}
+{{- with site.Params.images }}
+  {{- if reflect.IsMap . }}
+    {{- warnf "[images] please rename the images site parameter to hugomods.images, since it's conflict with some internal templates, see https://github.com/hugomods/images/issues/26." }}
+    {{- $params = . }}
+  {{- end }}
+{{- end }}
+{{- return merge $default $params }}
