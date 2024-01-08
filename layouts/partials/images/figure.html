@@ -1,0 +1,4 @@
+<figure class="{{ .figureClass }} {{ .wrapperClass }}">
+  {{ partial "images/picture" (merge .ctx (dict "className" (printf "%s %s" .figureImgClass .className))) }}
+  <figcaption class="{{ .figureCaptionClass }}">{{ .caption }}</figcaption>
+</figure>
