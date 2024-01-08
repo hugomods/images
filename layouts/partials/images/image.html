@@ -214,11 +214,8 @@
     {{- $figureClass := default "figure" $siteParams.figure_class_name }}
     {{- $figureCaptionClass := default "figure-caption" $siteParams.figure_caption_class_name }}
     {{- $figureImgClass := default "figure-img" $siteParams.figure_image_class_name }}
-    <figure class="{{ $figureClass }} {{ $wrapperClass }}">
-      {{ partial "images/picture" (merge $ctx (dict "className" (printf "%s %s" $figureImgClass $className))) }}
-      <figcaption class="{{ $figureCaptionClass }}">{{ $caption }}</figcaption>
-    </figure>
+<figure class="{{ $figureClass }} {{ $wrapperClass }}">{{ partial "images/picture" (merge $ctx (dict "className" (printf "%s %s" $figureImgClass $className))) }}<figcaption class="{{ $figureCaptionClass }}">{{ $caption }}</figcaption></figure>
   {{- else }}
-    {{ partial "images/picture" (merge $ctx (dict "wrapperClass" $wrapperClass)) }}
+{{ partial "images/picture" (merge $ctx (dict "wrapperClass" $wrapperClass)) }}
   {{- end }}
 {{- end -}}
