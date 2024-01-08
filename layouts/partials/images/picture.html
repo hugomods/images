@@ -2,15 +2,33 @@
   {{- range .sources }}
     <source srcset="{{ .srcset }}" type="{{ .type }}" />
   {{- end }}
-  <img
-    class="{{ .className }}"
-    src="{{ .src }}"
-    alt="{{ .alt }}"
-    {{ if .lazyLoading }}loading="lazy"{{ end }}
-    {{ with .naturalHeight }}height="{{ . }}"{{ end }}
-    {{ with .naturalWidth }}width="{{ . }}"{{ end }}
-    {{ with .style }}{{ printf `style="%s"` (delimit . `; `) | safeHTMLAttr }}{{ end }}
-    {{ if and .original .originalSrc }}data-src="{{ .originalSrc }}"{{ end }}
-    {{ if and .original .originalWidth }}data-width="{{ .originalWidth }}"{{ end }}
-    {{ if and .original .originalHeight }}data-height="{{ .originalHeight }}"{{ end }} />
+  {{- $attrs := slice
+    (printf `class="%s"` .className)
+    (printf `src="%s"` .src)
+    (printf `alt="%s"` .alt)
+  }}
+  {{- if .lazyLoading }}
+    {{- $attrs = $attrs | append `loading="lazy"` }}
+  {{- end }}
+  {{- with .naturalHeight }}
+    {{- $attrs = $attrs | append (printf `height="%d"` .) }}
+  {{- end }}
+  {{- with .naturalWidth }}
+    {{- $attrs = $attrs | append (printf `width="%d"` .) }}
+  {{- end }}
+  {{- with .style }}
+    {{- $attrs = $attrs | append (printf `style="%s"` (delimit . `; `)) }}
+  {{- end }}
+  {{- if .original }}
+    {{- with .originalSrc }}
+      {{- $attrs = $attrs | append (printf `data-src="%s"` .) }}
+    {{- end }}
+    {{- with .originalWidth }}
+      {{- $attrs = $attrs | append (printf `data-width="%d"` .) }}
+    {{- end }}
+    {{- with .originalHeight }}
+      {{- $attrs = $attrs | append (printf `data-height="%d"` .) }}
+    {{- end }}
+  {{- end }}
+  <img {{ delimit $attrs " " | safeHTMLAttr }} />
 </picture>
