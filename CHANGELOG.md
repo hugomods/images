@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.4](https://github.com/hugomods/images/compare/v0.8.3...v0.8.4) (2024-01-08)
+
+
+### Bug Fixes 🐞
+
+* remove invalid indentations and empty line break, so that the partial can be used in nested shortcode ([#33](https://github.com/hugomods/images/issues/33)) ([30f968b](https://github.com/hugomods/images/commit/30f968b65c67214c8937c76012455f8f4c515547))
+
 ## [0.8.3](https://github.com/hugomods/images/compare/v0.8.2...v0.8.3) (2023-11-08)
 
 
