@@ -7,6 +7,9 @@
 {{/* - Original    : whether to describe the original image info via data-* attributes, default to false. */}}
 {{/* - LazyLoading : whether enable lazy loading, default true. */}}
 {{/* - Style       : additional inline style for <img> tag. */}}
+{{/* - Height      : the natural height of image, typically used for external image. */}}
+{{/* - Width       : the natural width of image, typically used for external image. */}}
+{{/* - Alignment   : the alignment of image. */}}
 {{- $formats := slice "bmp" "jpeg" "jpg" "png" "tif" "tiff" "webp" }}
 {{- $modernFormat := "webp" }}
 {{- $siteParams := partialCached "images/functions/params" . }}
@@ -27,16 +30,16 @@
 {{- $alt := default "" .Alt }}
 {{- $caption := default "" .Caption }}
 {{- $className := default (default "img-fluid" $siteParams.class_name) .ClassName }}
-{{- $height := default "" ($params.Get "height" | strings.TrimSuffix "px") }}
+{{- $height := default (default "" .Height) ($params.Get "height" | strings.TrimSuffix "px") }}
 {{- $originalHeight := 0 }}
 {{- $naturalHeight := $height }}
-{{- $width := default "" ($params.Get "width" | strings.TrimSuffix "px") }}
+{{- $width := default (default "" .Width) ($params.Get "width" | strings.TrimSuffix "px") }}
 {{- $originalWidth := 0 }}
 {{- $naturalWidth := $width }}
 {{- $wrapperClass := "" }}
 {{- $sources := slice }}
 {{/* Image alignment. */}}
-{{- $alignment := $url.Fragment }}
+{{- $alignment := default .Alignment $url.Fragment }}
 {{- if eq $alignment "center" }}
   {{- $wrapperClass = default "d-block text-center" $siteParams.alignment_center_class_name }}
 {{- else if eq $alignment "float-start" }}
