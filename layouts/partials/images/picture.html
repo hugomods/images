@@ -11,10 +11,10 @@
     {{- $attrs = $attrs | append `loading="lazy"` }}
   {{- end }}
   {{- with .naturalHeight }}
-    {{- $attrs = $attrs | append (printf `height="%d"` .) }}
+    {{- $attrs = $attrs | append (printf `height="%s"` (string .)) }}
   {{- end }}
   {{- with .naturalWidth }}
-    {{- $attrs = $attrs | append (printf `width="%d"` .) }}
+    {{- $attrs = $attrs | append (printf `width="%s"` (string .)) }}
   {{- end }}
   {{- with .style }}
     {{- $attrs = $attrs | append (printf `style="%s"` (delimit . `; `)) }}
@@ -24,10 +24,10 @@
       {{- $attrs = $attrs | append (printf `data-src="%s"` .) }}
     {{- end }}
     {{- with .originalWidth }}
-      {{- $attrs = $attrs | append (printf `data-width="%d"` .) }}
+      {{- $attrs = $attrs | append (printf `data-width="%s"` (string .)) }}
     {{- end }}
     {{- with .originalHeight }}
-      {{- $attrs = $attrs | append (printf `data-height="%d"` .) }}
+      {{- $attrs = $attrs | append (printf `data-height="%s"` (string .)) }}
     {{- end }}
   {{- end }}
   <img {{ delimit $attrs " " | safeHTMLAttr }} />
