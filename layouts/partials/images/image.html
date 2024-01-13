@@ -27,10 +27,10 @@
 {{- $alt := default "" .Alt }}
 {{- $caption := default "" .Caption }}
 {{- $className := default (default "img-fluid" $siteParams.class_name) .ClassName }}
-{{- $height := default "" ($params.Get "height") }}
+{{- $height := default "" ($params.Get "height" | strings.TrimSuffix "px") }}
 {{- $originalHeight := 0 }}
 {{- $naturalHeight := $height }}
-{{- $width := default "" ($params.Get "width") }}
+{{- $width := default "" ($params.Get "width" | strings.TrimSuffix "px") }}
 {{- $originalWidth := 0 }}
 {{- $naturalWidth := $width }}
 {{- $wrapperClass := "" }}
