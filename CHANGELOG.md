@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.9.0](https://github.com/hugomods/images/compare/v0.8.4...v0.9.0) (2024-01-13)
+
+
+### Features ✨
+
+* add more parameters for image partial, Height, Width and Alignment ([#39](https://github.com/hugomods/images/issues/39)) ([e0723aa](https://github.com/hugomods/images/commit/e0723aaac7bc20528f8ffc0fbf21ce87f9ca0cac))
+
+
+### Bug Fixes 🐞
+
+* broken width and height values ([#36](https://github.com/hugomods/images/issues/36)) ([e3bc1b6](https://github.com/hugomods/images/commit/e3bc1b64c38a827282b2c7e7efe3d3b4b7c8507a))
+* remove unit from width and height attributes ([#38](https://github.com/hugomods/images/issues/38)) ([ddfe37b](https://github.com/hugomods/images/commit/ddfe37bffffbf010cecde200901b9d876a973120))
+
 ## [0.8.4](https://github.com/hugomods/images/compare/v0.8.3...v0.8.4) (2024-01-08)
 
 
