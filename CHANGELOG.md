@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.2](https://github.com/hugomods/images/compare/v0.9.1...v0.9.2) (2024-02-28)
+
+
+### Bug Fixes 🐞
+
+* use RelPermalink instead of Permalink ([#43](https://github.com/hugomods/images/issues/43)) ([99899b0](https://github.com/hugomods/images/commit/99899b063a025a4d7dfd49d089443386bbe855bb))
+
 ## [0.9.1](https://github.com/hugomods/images/compare/v0.9.0...v0.9.1) (2024-02-22)
 
 
