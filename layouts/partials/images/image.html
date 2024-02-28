@@ -60,9 +60,7 @@
     {{- $res = $page.Resources.GetMatch $path }}
   {{- end }}
   {{- with $res }}
-    {{/* TODO: use Permalink instead, since the fingerprint resources will not published to other sites. */}}
-    {{/* See https://github.com/hugomods/images/issues/23. */}}
-    {{- $originalSrc = ($res | fingerprint "md5").Permalink }}
+    {{- $originalSrc = ($res | fingerprint "md5").RelPermalink }}
     {{- $originalWidth = $res.Width }}
     {{- $originalHeight = $res.Height }}
     {{/* Check if the image resource is valid. */}}
@@ -148,14 +146,10 @@
     {{/* Modern format. */}}
     {{- if and $modernFormat (ne $modernFormat $res.MediaType.SubType) (in $formats $res.MediaType.SubType) }}
       {{- $modernImg := partial "images/functions/format" (dict "Img" $res "Format" $modernFormat) }}
-      {{/* TODO: use Permalink instead, since the processed resources will not published to other sites. */}}
-      {{/* See https://github.com/gohugoio/hugo/issues/12110. */}}
-      {{- $sources = $sources | append (dict "srcset" $modernImg.Permalink "type" $modernImg.MediaType) }}
+      {{- $sources = $sources | append (dict "srcset" $modernImg.RelPermalink "type" $modernImg.MediaType) }}
     {{- end }}
     {{/* Reset image properties. */}}
-    {{/* TODO: use Permalink instead, since the fingerprint resources will not published to other sites. */}}
-    {{/* See https://github.com/hugomods/images/issues/23. */}}
-    {{- $src = ($res | fingerprint "md5").Permalink }}
+    {{- $src = ($res | fingerprint "md5").RelPermalink }}
     {{- $height = $res.Height }}
     {{- $naturalHeight = $res.Height }}
     {{- $width = $res.Width }}
