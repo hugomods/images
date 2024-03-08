@@ -1,17 +1,14 @@
-{{- $img := "" }}
 {{- $page := .Page }}
-{{- with $page.Params.images }}
-  {{- $img = index . 0 }}
-{{- else }}
-  {{- $thumbnail := partialCached "images/functions/page-thumbnail-resource" $page $page }}
-  {{- with $thumbnail }}
-    {{- $img = replace .RelPermalink $page.RelPermalink "" | printf "%s?height=360px" }}
-  {{- end }}
-{{- end }}
+{{- $images := partial "_funcs/get-page-images" $page }}
 {{- $html := "" }}
-{{- with $img }}
+{{- with $images }}
+  {{- $image := index . 0 }}
+  {{- $filename := $image.RelPermalink }}
+  {{- if $image.Image }}
+    {{- $filename = $image.Image.Name }}
+  {{- end }}
   {{- $html = partial "images/image" (dict
-    "Filename" $img
+    "Filename" $filename
     "Page" $page
     "Style" $.Style
     "ClassName" $.ClassName)
