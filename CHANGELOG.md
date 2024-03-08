@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.3](https://github.com/hugomods/images/compare/v0.9.2...v0.9.3) (2024-03-08)
+
+
+### Bug Fixes 🐞
+
+* use _funcs/get-page-images for getting thumbnail images ([742fc49](https://github.com/hugomods/images/commit/742fc491c2e3e119a7c58a6083f0536e6405ac47))
+
 ## [0.9.2](https://github.com/hugomods/images/compare/v0.9.1...v0.9.2) (2024-02-28)
 
 
