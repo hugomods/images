@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.10.0](https://github.com/hugomods/images/compare/v0.9.3...v0.10.0) (2024-03-09)
+
+
+### Features ✨
+
+* add the naturalWidth and naturalHeight query parameters for external images ([465897a](https://github.com/hugomods/images/commit/465897a1710c052991347a04e3921600f03e63c4))
+
+
+### Bug Fixes 🐞
+
+* add unit for width and height inline style attributes ([461c269](https://github.com/hugomods/images/commit/461c269f8fd2f3db5c6aae37bf02191a05fedc25))
+* remove unit from width and height attributes for public images ([#46](https://github.com/hugomods/images/issues/46)) ([461c269](https://github.com/hugomods/images/commit/461c269f8fd2f3db5c6aae37bf02191a05fedc25))
+
 ## [0.9.3](https://github.com/hugomods/images/compare/v0.9.2...v0.9.3) (2024-03-08)
 
 
