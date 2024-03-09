@@ -160,8 +160,8 @@
       {{/* Process static image. */}}
       {{- $src = absURL $url.Path }}
       {{- with imageConfig $filepath }}
-        {{- $naturalHeight = printf "%dpx" .Height }}
-        {{- $naturalWidth = printf "%dpx" .Width }}
+        {{- $naturalHeight = .Height }}
+        {{- $naturalWidth = .Width }}
       {{- end }}
       {{/* hash by the date. */}}
       {{- $hash := "" }}
@@ -190,10 +190,10 @@
 {{- if $src }}
   {{/* Inline style. */}}
   {{- if and $height (ne $height $naturalHeight) }}
-    {{- $style = $style | append (printf "height: %s" $height) }}
+    {{- $style = $style | append (printf "height: %spx" $height) }}
   {{- end }}
   {{- if and $width (ne $width $naturalWidth) }}
-    {{- $style = $style | append (printf "width: %s" $width) }}
+    {{- $style = $style | append (printf "width: %spx" $width) }}
   {{- end }}
   {{- $ctx := dict
     "sources" $sources
