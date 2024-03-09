@@ -32,10 +32,10 @@
 {{- $className := default (default "img-fluid" $siteParams.class_name) .ClassName }}
 {{- $height := default (default "" .Height) ($params.Get "height" | strings.TrimSuffix "px") }}
 {{- $originalHeight := 0 }}
-{{- $naturalHeight := $height }}
+{{- $naturalHeight := default $height ($params.Get "naturalHeight" | strings.TrimSuffix "px") }}
 {{- $width := default (default "" .Width) ($params.Get "width" | strings.TrimSuffix "px") }}
 {{- $originalWidth := 0 }}
-{{- $naturalWidth := $width }}
+{{- $naturalWidth := default $width ($params.Get "naturalWidth" | strings.TrimSuffix "px") }}
 {{- $wrapperClass := "" }}
 {{- $sources := slice }}
 {{/* Image alignment. */}}
