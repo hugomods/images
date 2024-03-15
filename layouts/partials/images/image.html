@@ -22,6 +22,7 @@
 {{- $page := default page .Page }}
 {{- $url := urls.Parse $filename }}
 {{- $params := $url.Query }}
+{{- $ext := path.Ext $url.Path }}
 {{/* Initialize image properties. */}}
 {{- $src := "" }}
 {{- $style := default slice .Style }}
@@ -159,9 +160,11 @@
     {{- if fileExists $filepath }}
       {{/* Process static image. */}}
       {{- $src = absURL $url.Path }}
-      {{- with imageConfig $filepath }}
-        {{- $naturalHeight = .Height }}
-        {{- $naturalWidth = .Width }}
+      {{- if not (in (slice ".avif" ".jxl") $ext) }}
+        {{- with imageConfig $filepath }}
+          {{- $naturalHeight = .Height }}
+          {{- $naturalWidth = .Width }}
+        {{- end }}
       {{- end }}
       {{/* hash by the date. */}}
       {{- $hash := "" }}
