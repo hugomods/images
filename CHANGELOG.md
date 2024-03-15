@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.10.1](https://github.com/hugomods/images/compare/v0.10.0...v0.10.1) (2024-03-15)
+
+
+### Bug Fixes 🐞
+
+* check if the image resource media type is avif and print error when necessary ([8afe41e](https://github.com/hugomods/images/commit/8afe41efb8c510967227657ed0f56a9b653c7dce))
+* do not apply imageConfig on avif and jxl images ([#48](https://github.com/hugomods/images/issues/48)) ([767df64](https://github.com/hugomods/images/commit/767df64ef1817eb789791318e232fc888778ef36))
+* set the caption as title if present ([#50](https://github.com/hugomods/images/issues/50)) ([59b9b9f](https://github.com/hugomods/images/commit/59b9b9f0baf528b8fcd96ce920587c32cbd14717))
+
 ## [0.10.0](https://github.com/hugomods/images/compare/v0.9.3...v0.10.0) (2024-03-09)
 
 
