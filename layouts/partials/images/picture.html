@@ -7,6 +7,9 @@
     (printf `src="%s"` .src)
     (printf `alt="%s"` .alt)
   }}
+  {{- with .caption }}
+    {{- $attrs = $attrs | append (printf `title="%s"` .) }}
+  {{- end }}
   {{- if .lazyLoading }}
     {{- $attrs = $attrs | append `loading="lazy"` }}
   {{- end }}
