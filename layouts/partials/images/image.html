@@ -62,12 +62,15 @@
   {{- end }}
   {{- with $res }}
     {{- $originalSrc = ($res | fingerprint "md5").RelPermalink }}
-    {{- $originalWidth = $res.Width }}
-    {{- $originalHeight = $res.Height }}
     {{/* Check if the image resource is valid. */}}
     {{- if ne $res.MediaType.MainType "image" }}
       {{- errorf "the image is invalid: %s" $filename }}
     {{- end }}
+    {{- if in (slice "image/avif") $res.MediaType.Type }}
+      {{- errorf "the image resource type %q is not supported: %s" $res.MediaType.Type $url.Path }}
+    {{- end }}
+    {{- $originalWidth = $res.Width }}
+    {{- $originalHeight = $res.Height }}
     {{/* Resize the image. */}}
     {{- if and $width $height }}
       {{- $res = .Resize (printf "%sx%s" (strings.TrimSuffix "px" $width) (strings.TrimSuffix "px" $height)) }}
