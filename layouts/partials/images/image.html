@@ -37,6 +37,7 @@
 {{- $width := default (default "" .Width) ($params.Get "width" | strings.TrimSuffix "px") }}
 {{- $originalWidth := 0 }}
 {{- $naturalWidth := default $width ($params.Get "naturalWidth" | strings.TrimSuffix "px") }}
+{{- $quality := $params.Get "quality" }}
 {{- $wrapperClass := "" }}
 {{- $sources := slice }}
 {{/* Image alignment. */}}
@@ -72,12 +73,19 @@
     {{- $originalWidth = $res.Width }}
     {{- $originalHeight = $res.Height }}
     {{/* Resize the image. */}}
+    {{- $resizeSpec := slice }}
     {{- if and $width $height }}
-      {{- $res = .Resize (printf "%sx%s" (strings.TrimSuffix "px" $width) (strings.TrimSuffix "px" $height)) }}
+      {{- $resizeSpec = $resizeSpec | append (printf "%sx%s" (strings.TrimSuffix "px" $width) (strings.TrimSuffix "px" $height)) }}
     {{- else if $width }}
-      {{- $res = .Resize (printf "%sx" (strings.TrimSuffix "px" $width)) }}
+      {{- $resizeSpec = $resizeSpec | append (printf "%sx" (strings.TrimSuffix "px" $width)) }}
     {{- else if $height }}
-      {{- $res = .Resize (printf "x%s" (strings.TrimSuffix "px" $height)) }}
+      {{- $resizeSpec = $resizeSpec | append (printf "x%s" (strings.TrimSuffix "px" $height)) }}
+    {{- end }}
+    {{- with $quality }}
+      {{- $resizeSpec = $resizeSpec | append (printf "q%s" .) }}
+    {{- end }}
+    {{- with $resizeSpec }}
+      {{- $res = $res.Resize (delimit . " ") }}
     {{- end }}
     {{/* Cropping image. */}}
     {{- with $params.Get "crop" }}
