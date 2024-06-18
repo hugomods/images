@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.11.0](https://github.com/hugomods/images/compare/v0.10.1...v0.11.0) (2024-06-18)
+
+
+### Features ✨
+
+* allow specifying quality for resize method ([#54](https://github.com/hugomods/images/issues/54)) ([c7524e3](https://github.com/hugomods/images/commit/c7524e3a196931d3962bdd06b45fc72aab34437b))
+
 ## [0.10.1](https://github.com/hugomods/images/compare/v0.10.0...v0.10.1) (2024-03-15)
 
 
