@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.11.2](https://github.com/hugomods/images/compare/v0.11.1...v0.11.2) (2024-08-26)
+
+
+### Bug Fixes 🐞
+
+* do not generate warning messages for unsupported formats ([4e6b050](https://github.com/hugomods/images/commit/4e6b0508dcad15d179d1ca5273240c5a51eba76c))
+
 ## [0.11.1](https://github.com/hugomods/images/compare/v0.11.0...v0.11.1) (2024-08-26)
 
 
