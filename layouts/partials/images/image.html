@@ -61,15 +61,23 @@
   {{- else }}
     {{- $res = $page.Resources.GetMatch $path }}
   {{- end }}
+  {{- $mediaMainType := "" }}
+  {{- $mediaSubType := "" }}
   {{- with $res }}
+    {{- $mediaMainType = .MediaType.MainType }}
+    {{- $mediaSubType = .MediaType.SubType }}
+  {{- end }}
+  {{/* Check if the image resource is valid. */}}
+  {{- if and (ne $mediaMainType "") (ne $mediaMainType "image") }}
+    {{- errorf "the image is invalid: %s" $filename }}
+  {{- end }}
+  {{- $unsupportedFormats := slice "avif" "svg" }}
+  {{- if and (ne $mediaSubType "") (in $unsupportedFormats $mediaSubType) }}
+    {{/* Leave it as it is for unsupported formats. */}}
+    {{- $src = ($res | fingerprint "md5").RelPermalink }}
+  {{- end }}
+  {{- if and (eq $mediaMainType "image") (not (in $unsupportedFormats $mediaSubType)) }}
     {{- $originalSrc = ($res | fingerprint "md5").RelPermalink }}
-    {{/* Check if the image resource is valid. */}}
-    {{- if ne $res.MediaType.MainType "image" }}
-      {{- errorf "the image is invalid: %s" $filename }}
-    {{- end }}
-    {{- if in (slice "image/avif") $res.MediaType.Type }}
-      {{- errorf "the image resource type %q is not supported: %s" $res.MediaType.Type $url.Path }}
-    {{- end }}
     {{- $originalWidth = $res.Width }}
     {{- $originalHeight = $res.Height }}
     {{/* Resize the image. */}}
