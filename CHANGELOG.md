@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.11.1](https://github.com/hugomods/images/compare/v0.11.0...v0.11.1) (2024-08-26)
+
+
+### Bug Fixes 🐞
+
+* allow using SVG and Avif images, but do not apply any filters on them ([#59](https://github.com/hugomods/images/issues/59)) ([7b8dc1d](https://github.com/hugomods/images/commit/7b8dc1db124a8e4f6fc189c896a1fcaab7a3e25a))
+
 ## [0.11.0](https://github.com/hugomods/images/compare/v0.10.1...v0.11.0) (2024-06-18)
 
 
