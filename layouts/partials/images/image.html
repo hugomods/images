@@ -201,7 +201,7 @@
           {{- $src = printf "%s?v=%s%s" $src $hash $fragment }}
         {{- end }}
       {{- end }}
-    {{- else }}
+    {{- else if not $res }}
       {{- warnf "[github.com/hugomods/images] image not found: %s" $filename }}
     {{- end }}
   {{- end }}
