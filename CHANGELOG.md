@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.12.0](https://github.com/hugomods/images/compare/v0.11.2...v0.12.0) (2025-06-03)
+
+
+### Features ✨
+
+* allow adding custom attributes for &lt;picture&gt; element via attr-* query parameters ([f5d8cb4](https://github.com/hugomods/images/commit/f5d8cb4970b167287bac2952140142f344c358f0))
+
 ## [0.11.2](https://github.com/hugomods/images/compare/v0.11.1...v0.11.2) (2024-08-26)
 
 
