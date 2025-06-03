@@ -38,6 +38,13 @@
 {{- $originalWidth := 0 }}
 {{- $naturalWidth := default $width ($params.Get "naturalWidth" | strings.TrimSuffix "px") }}
 {{- $quality := $params.Get "quality" }}
+{{/* Custom attributes for the <picture> element. */}}
+{{- $attrs := slice }}
+{{- range $name, $value := $params }}
+  {{- if hasPrefix $name "attr-" }}
+    {{- $attrs = $attrs | append (printf `%s="%s"` (replace $name "attr-" "") (index $value 0)) }}
+  {{- end }}
+{{- end }}
 {{- $wrapperClass := "" }}
 {{- $sources := slice }}
 {{/* Image alignment. */}}
@@ -231,6 +238,7 @@
     "originalSrc" $originalSrc
     "originalWidth" $originalWidth
     "originalHeight" $originalHeight
+    "attrs" $attrs
   }}
   {{- if $caption }}
     {{- $figureClass := default "figure" $siteParams.figure_class_name }}
