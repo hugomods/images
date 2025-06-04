@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.12.1](https://github.com/hugomods/images/compare/v0.12.0...v0.12.1) (2025-06-04)
+
+
+### Bug Fixes 🐞
+
+* apply attr-* parameters for outer element: picture or caption ([8b75a94](https://github.com/hugomods/images/commit/8b75a94a6d0f1848284b8b92759761170c616542))
+
 ## [0.12.0](https://github.com/hugomods/images/compare/v0.11.2...v0.12.0) (2025-06-03)
 
 
