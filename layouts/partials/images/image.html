@@ -38,7 +38,7 @@
 {{- $originalWidth := 0 }}
 {{- $naturalWidth := default $width ($params.Get "naturalWidth" | strings.TrimSuffix "px") }}
 {{- $quality := $params.Get "quality" }}
-{{/* Custom attributes for the <picture> element. */}}
+{{/* Custom attributes for the outer element, <picture> element or <caption> element when caption is present. */}}
 {{- $attrs := slice }}
 {{- range $name, $value := $params }}
   {{- if hasPrefix $name "attr-" }}
@@ -238,7 +238,6 @@
     "originalSrc" $originalSrc
     "originalWidth" $originalWidth
     "originalHeight" $originalHeight
-    "attrs" $attrs
   }}
   {{- if $caption }}
     {{- $figureClass := default "figure" $siteParams.figure_class_name }}
@@ -250,9 +249,10 @@
       "figureImgClass" $figureImgClass
       "className" $className
       "figureCaptionClass" $figureCaptionClass
+      "attrs" $attrs
       "ctx" $ctx
     ) }}
   {{- else }}
-    {{- partial "images/picture" (merge $ctx (dict "wrapperClass" $wrapperClass)) }}
+    {{- partial "images/picture" (merge $ctx (dict "attrs" $attrs "wrapperClass" $wrapperClass)) }}
   {{- end }}
 {{- end -}}
