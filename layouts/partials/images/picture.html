@@ -1,6 +1,4 @@
-<picture
-{{ with .wrapperClass }}class="{{ . }}"{{ end }}
-{{ range .attrs }}{{ . | safeHTMLAttr }}{{ end }}>
+<picture {{ with .wrapperClass }}class="{{ . }}"{{ end }} {{ range .attrs }}{{ . | safeHTMLAttr }}{{ end }}>
   {{- range .sources }}
     <source srcset="{{ .srcset }}" type="{{ .type }}" />
   {{- end }}
