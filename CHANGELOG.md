@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.12.3](https://github.com/hugomods/images/compare/v0.12.2...v0.12.3) (2025-06-14)
+
+
+### Bug Fixes 🐞
+
+* avoid line break for `<figure>` element ([c397a85](https://github.com/hugomods/images/commit/c397a859cadb6ea7f4b58ed6dc32e68a4f1f1da4))
+
 ## [0.12.2](https://github.com/hugomods/images/compare/v0.12.1...v0.12.2) (2025-06-14)
 
 
